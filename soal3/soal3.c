@@ -93,7 +93,7 @@ void download_n_images_to(int number_of_image, char destination_dir[100]) {
         if (dl_child_id == 0) {
             download_an_image(destination_dir);
         }
-        sleep(1);
+        sleep(5);
     }
     create_success_status(destination_dir);
 
@@ -167,6 +167,6 @@ int main(int argc, char *argv[]) {
 
             download_n_images_to(10, destination_dir);
         }
-        sleep(5);
+        sleep(40);
     }
 }
