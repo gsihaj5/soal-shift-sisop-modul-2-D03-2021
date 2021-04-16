@@ -47,7 +47,7 @@ void zip_folder(char destination_dir[100]) {
     strcat(target_zip, ".zip");
 
     // zip -r my_arch.zip my_folder
-    char *argv[] = {"zip", "-r", target_zip, destination_dir, NULL};
+    char *argv[] = {"zip", "-qr", target_zip, destination_dir, NULL};
     execv("/bin/zip", argv);
 }
 
@@ -103,14 +103,41 @@ void download_n_images_to(int number_of_image, char destination_dir[100]) {
     if (zip_child_id == 0) {
         zip_folder(destination_dir);
     }
+
     while ((wait(&zip_child_id)) > 0) {
-    } /*wait until mkdir done*/
+    } /*wait until zip done*/
 
     char *argv[] = {"rm", "-r", destination_dir, NULL};
     execv("/bin/rm", argv);
 }
 
-int main() {
+void write_killer_bash(FILE *file, char killer_arg) {
+    fprintf(file, "#!/bin/bash\n");
+
+    if (killer_arg == 'x') {
+        pid_t process_id;
+        process_id = getpid();
+        fprintf(file, "kill -9 %d\n", process_id);
+    } else if (killer_arg == 'z') {
+        pid_t session_id;
+        session_id = getsid(0);
+        fprintf(file, "pkill -s %d\n", session_id);
+    }
+}
+
+void create_killer_bash(char killer_arg) {
+    FILE *killer_file;
+
+    char path[100] = "soal3_kill.sh";
+    killer_file = fopen(path, "w");
+
+    write_killer_bash(killer_file, killer_arg);
+
+    fclose(killer_file);
+}
+
+int main(int argc, char *argv[]) {
+    create_killer_bash((argv[1])[1]);
     pid_t child_id;
     int child_stat;
 
