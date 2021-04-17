@@ -35,7 +35,7 @@ Wget --no-check-certificate "https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISd
 Pada soal ini, soal belum bisa diselesaikan dengan baik, proses pengerjaan belum berjalan pada latar belakang dan belum berjalan pada waktu yang ditentukan.
 Soal ini dikerjakan dengan cara :
 1. mendownload file-file yang diminta dengan cara seperti berikut
-```
+```c
 void func_donwload_foto() {    
     
     //download foto 
@@ -45,7 +45,7 @@ void func_donwload_foto() {
 ```
 cara diatas kemudian diaplikasikan pada file lainnya dengan perubahan link dan argumennya
 2.  unzip hasil download dengan cara seperti berikut
-```
+```c
 void unzip_foto() {
     //unzip foto 
     char *argv[]={"unzip", "foto.zip", NULL};
@@ -53,7 +53,7 @@ void unzip_foto() {
 }
 ```
 3.  mengubah hasil unzip ke nama folder yang serupa dengan keterangan soal
-```
+```c
 void rename_to_pyoto(){
 
     //rename FOTO -> Pyoto
@@ -62,7 +62,7 @@ void rename_to_pyoto(){
 }
 ```
 4.  zip folder ke dalam suatu zip dengan nama Lopyu_Stevany.zip
-```
+```c
 void zipto_one() {
     //ZIP Pyoto,Fylm, Musyik ke satu zip
     char *argv[]={"zip", "-r" ,"Lopyu_Stevany.zip" , "Pyoto", "Musyik", "Fylm", NULL};
@@ -70,7 +70,7 @@ void zipto_one() {
 }
 ```
 5. Menghapus folder
-```
+```c
 void delete_Pyoto() {
     char *argv[]={"rm", "-r", "Pyoto", NULL};
     execv("/bin/rm", argv);
