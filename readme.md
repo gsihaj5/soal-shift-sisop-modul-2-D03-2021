@@ -31,8 +31,6 @@ wget --no-check-certificate "https://drive.google.com/uc?id=ID-FILE&export=downl
 ```
 Wget --no-check-certificate "https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download" -O Musik_for_Stevany.zip
 ```
-## Hasil Pengerjaan 🖥
-
 ## Cara Pengerjaan 📝
 Pada soal ini, soal belum bisa diselesaikan dengan baik, proses pengerjaan belum berjalan pada latar belakang dan belum berjalan pada waktu yang ditentukan.
 Soal ini dikerjakan dengan cara :
@@ -83,6 +81,8 @@ void delete_Pyoto() {
 1. Belum bisa mengimplementasikan pada daemon agar berjalan di latar belakang
 2. Belum bisa mengatur program agar berjalan pada waktu yang diminta pada deskripsi soal
 
+## Hasil Pengerjaan 🖥
+![nomer1 jam 14:00](https://github.com/widigdacahya/gif/blob/main/nomer1_.gif?raw=true)
 
 # ============== NO 3 ===============
 
