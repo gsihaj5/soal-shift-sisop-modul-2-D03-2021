@@ -2,6 +2,88 @@
 
 # LAPORAN PENGERJAAN SOAL SHIFT
 
+# ============== NO 1 ===============
+## Soal 📘
+Pada suatu masa, hiduplah seorang Steven yang hidupnya pas-pasan. Steven punya pacar, namun sudah putus sebelum pacaran. Ketika dia galau memikirkan mantan, ia selalu menonton https://www.youtube.com/watch?v=568DH_9CMKI untuk menghilangkan kesedihannya. Di lain hal Steven anak yang tidak amat sangat super membenci matkul sisop, beberapa jam setelah diputus oleh pacarnya dia menemukan wanita lain bernama Stevany, namun Stevany berkebalikan dengan Steven karena menyukai sisop. Steven ingin terlihat jago matkul sisop demi menarik perhatian Stevany. Pada hari ulang tahun Stevany, Steven ingin memberikan Stevany zip berisikan hal-hal yang disukai Stevany. Steven ingin isi zipnya menjadi rapi dengan membuat folder masing-masing sesuai extensi. 
+  * (a) Dikarenakan Stevany sangat menyukai huruf Y, Steven ingin nama folder-foldernya adalah Musyik untuk mp3, Fylm untuk mp4, dan Pyoto untuk jpg 
+  * (b) untuk musik Steven mendownloadnya dari link di bawah, film dari link di bawah lagi, dan foto dari link dibawah juga :). 
+  * (c) Steven tidak ingin isi folder yang dibuatnya berisikan zip, sehingga perlu meng-extract-nya setelah didownload serta 
+  * (d) memindahkannya ke dalam folder yang telah dibuat (hanya file yang dimasukkan).
+  * (e) Untuk memudahkan Steven, ia ingin semua hal di atas berjalan otomatis 6 jam sebelum waktu ulang tahun Stevany). 
+  * (f) Setelah itu pada waktu ulang tahunnya Stevany, semua folder akan di zip dengan nama Lopyu_Stevany.zip dan semua folder akan di delete(sehingga hanya menyisakan .zip).
+   - **Note:**
+   - Ulang Tahun Stevany : 09 April Pukul 22.22 WIB
+   - Semua poin dijalankan oleh 1 script di latar belakang, termasuk mendownload file zip-nya. Jadi cukup jalankan script 1x serta ubah time dan date untuk check hasilnya. Preview : https://drive.google.com/drive/folders/1NzRiPPoVlR_H8P51cxN4jaceeFQGk4un *tontonnya 720p biar jelas.. ಠ‿ಠ
+   - Tidak boleh menggunakan fungsi system(), mkdir(), dan rename() (Yang di bahasa C) .... FORBIDDENNN!!
+   - Tidak boleh pake cron !!!
+   - Menggunakan fork dan exec.
+   - link donwload file
+   - > Foto :https://drive.google.com/file/d/1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD/view
+   - > Film :https://drive.google.com/file/d/1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp/view
+   - > Musik :https://drive.google.com/file/d/1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J/view
+   - **Tips :**
+   - Gunakan fungsi wait() dan sleep() untuk memperlancarrr..
+   - untuk mendownload zip yang dibutuhkan bisa menggunakan command :
+```
+wget --no-check-certificate "https://drive.google.com/uc?id=ID-FILE&export=download" -O Nama_untuk_filenya.ext
+```
+   -contoh
+```
+Wget --no-check-certificate "https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download" -O Musik_for_Stevany.zip
+```
+## Hasil Pengerjaan 🖥
+
+## Cara Pengerjaan 📝
+Pada soal ini, soal belum bisa diselesaikan dengan baik, proses pengerjaan belum berjalan pada latar belakang dan belum berjalan pada waktu yang ditentukan.
+Soal ini dikerjakan dengan cara :
+1. mendownload file-file yang diminta dengan cara seperti berikut
+```
+void func_donwload_foto() {    
+    
+    //download foto 
+    char *argv[]={"wget", "--no-check-certificate", "https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download", "-O", "foto.zip",  NULL};
+    execv("/usr/bin/wget", argv);   
+}
+```
+cara diatas kemudian diaplikasikan pada file lainnya dengan perubahan link dan argumennya
+2.  unzip hasil download dengan cara seperti berikut
+```
+void unzip_foto() {
+    //unzip foto 
+    char *argv[]={"unzip", "foto.zip", NULL};
+    execv("/usr/bin/unzip", argv);
+}
+```
+3.  mengubah hasil unzip ke nama folder yang serupa dengan keterangan soal
+```
+void rename_to_pyoto(){
+
+    //rename FOTO -> Pyoto
+    char *argv[]={"mv", "FOTO", "Pyoto", NULL};
+    execv("/bin/mv", argv);
+}
+```
+4.  zip folder ke dalam suatu zip dengan nama Lopyu_Stevany.zip
+```
+void zipto_one() {
+    //ZIP Pyoto,Fylm, Musyik ke satu zip
+    char *argv[]={"zip", "-r" ,"Lopyu_Stevany.zip" , "Pyoto", "Musyik", "Fylm", NULL};
+    execv("/usr/bin/zip", argv);
+}
+```
+5. Menghapus folder
+```
+void delete_Pyoto() {
+    char *argv[]={"rm", "-r", "Pyoto", NULL};
+    execv("/bin/rm", argv);
+}
+```
+
+## Kendala 🕳
+1. Belum bisa mengimplementasikan pada daemon agar berjalan di latar belakang
+2. Belum bisa mengatur program agar berjalan pada waktu yang diminta pada deskripsi soal
+
+
 # ============== NO 3 ===============
 
 ## PENYELESAIAN
