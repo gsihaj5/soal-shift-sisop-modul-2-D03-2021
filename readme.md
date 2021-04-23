@@ -185,7 +185,7 @@ Sebelum revisi program belum bisa diimplementasikan di latar belakang dan belum 
 ![nomer1 jam 14:00](https://github.com/widigdacahya/gif/blob/main/nomer1_.gif?raw=true)
 
 ## Hasil Pengerjaan(setelah revisi) 🖥
-![nomer1 jam 14:00](https://github.com/widigdacahya/gif/blob/main/nomer1_.gif?raw=true)
+![nomer1revisi](https://github.com/widigdacahya/gif/blob/main/hasil_revisi.gif?raw=true)
 
 # ============== NO 2 ===============
 
