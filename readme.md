@@ -32,56 +32,159 @@ wget --no-check-certificate "https://drive.google.com/uc?id=ID-FILE&export=downl
 Wget --no-check-certificate "https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download" -O Musik_for_Stevany.zip
 ```
 ## Cara Pengerjaan 📝
-Pada soal ini, soal belum bisa diselesaikan dengan baik, proses pengerjaan belum berjalan pada latar belakang dan belum berjalan pada waktu yang ditentukan.
-Soal ini dikerjakan dengan cara :
-1. mendownload file-file yang diminta dengan cara seperti berikut
-```c
-void func_donwload_foto() {    
-    
-    //download foto 
-    char *argv[]={"wget", "--no-check-certificate", "https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download", "-O", "foto.zip",  NULL};
-    execv("/usr/bin/wget", argv);   
-}
-```
-cara diatas kemudian diaplikasikan pada file lainnya dengan perubahan link dan argumennya
-2.  unzip hasil download dengan cara seperti berikut
-```c
-void unzip_foto() {
-    //unzip foto 
-    char *argv[]={"unzip", "foto.zip", NULL};
-    execv("/usr/bin/unzip", argv);
-}
-```
-3.  mengubah hasil unzip ke nama folder yang serupa dengan keterangan soal
-```c
-void rename_to_pyoto(){
+Secara garis besar, pengerjaan soal dilakukan dengan mendownload zip file lalu mengextract hasil donwload zip file tersebut. Setelah itu, hasil extract atau unzipnya direname nama foldernya sesuai dengan permintaan pada soal. Langkah-langkah tersebut dilakukan atau dijalankan saat waktu dan tanggal bernilai 9 April 16:22:00. Selanjutnya pada saat pukul 22:00, semua folder hasil zip yang sudah diubah namanya, di zip menjadi sebuah zip. Lalu yang terakhir adalah penghapusan folder-folder sebelumnya yang sudah di zip. Proses pengerjaan dilakukan di latar belakang dengan menggunakan daemon yang implementasinya mengikuti implementasi daemon pada [Modul2](https://github.com/arsitektur-jaringan-komputer/Modul-Sisop/tree/master/2021/Modul2#3-implementasi-daemon)
 
-    //rename FOTO -> Pyoto
-    char *argv[]={"mv", "FOTO", "Pyoto", NULL};
-    execv("/bin/mv", argv);
-}
-```
-4.  zip folder ke dalam suatu zip dengan nama Lopyu_Stevany.zip
 ```c
-void zipto_one() {
-    //ZIP Pyoto,Fylm, Musyik ke satu zip
-    char *argv[]={"zip", "-r" ,"Lopyu_Stevany.zip" , "Pyoto", "Musyik", "Fylm", NULL};
-    execv("/usr/bin/zip", argv);
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+#include <syslog.h>
+#include <string.h>
+
+int main() {
+  pid_t pid, sid;        // Variabel untuk menyimpan PID
+
+  pid = fork();     // Menyimpan PID dari Child Process
+
+  /* Keluar saat fork gagal
+  * (nilai variabel pid < 0) */
+  if (pid < 0) {
+    exit(EXIT_FAILURE);
+  }
+
+  /* Keluar saat fork berhasil
+  * (nilai variabel pid adalah PID dari child process) */
+  if (pid > 0) {
+    exit(EXIT_SUCCESS);
+  }
+
+  umask(0);
+
+  sid = setsid();
+  if (sid < 0) {
+    exit(EXIT_FAILURE);
+  }
+
+  if ((chdir("/")) < 0) {
+    exit(EXIT_FAILURE);
+  }
+
+  close(STDIN_FILENO);
+  close(STDOUT_FILENO);
+  close(STDERR_FILENO);
+
+  while (1) {
+    // Tulis program kalian di sini
+
+    sleep(30);
+  }
 }
+
 ```
-5. Menghapus folder
+kemudian untuk proses download, extract/unzip, mengubah nama folder, zip beberapa folder, dan menghapus folder dengan kode berikut 
+* [ download folder yang dibutuhkan melalui link ]
 ```c
-void delete_Pyoto() {
-    char *argv[]={"rm", "-r", "Pyoto", NULL};
-    execv("/bin/rm", argv);
+//[donwload]
+void downloadFileLink(char downloadLink[], char nameExt[]) {
+    char *argv[] = {"wget", "--no-check-certificate", downloadLink, "-O", nameExt, NULL};
+    execvProc("/usr/bin/wget", argv);
+}
+
+```
+* [ extract/unzip file zip hasil download ]
+```c
+//[extract]
+void extractZip(char filename[]) {
+    char *argv[] = {"unzip", filename, NULL};
+    execvProc("/usr/bin/unzip", argv);
+}
+
+```
+* [ mengubah nama folder hasil extract/unzi ]
+```c
+//[rename]
+void renameFolder(char current[], char result[]) {
+    char *argv[] = {"mv", current, result, NULL};
+    execvProc("/bin/mv", argv);
+}
+
+```
+* [ zip beberapa folder menjadi sebuah file zip ]
+```c
+//[zip to one]
+void zipToOne() {
+    char *argv[] = {"zip", "-r", "Lopyu_Stevany.zip", "Fylm", "Pyoto", "Myusik", NULL};
+    execvProc("/usr/bin/zip", argv);
 }
 ```
+* [ menghapus folder ]
+```c
+//[delete folder]
+void deleteFolder(char folderName[]) {
+    char *argv[] = {"rm", "-r", folderName, NULL};
+    execvProc("/bin/rm", argv);
+}
+
+```
+kode untuk proses download, extract/unzip, mengubah nama folder, zip beberapa folder, dan menghapus folder menggunakan execv dengan pemanggilan dari sebuah fungsi yang membuat execv berjalan dengan tetap mempertahankan program utama yang menjalankan pekerjaan lain selanjutnya
+* [ fungsi proses execv ]
+```c
+void execvProc(char commandPath[], char *argv[]) {
+    pid_t childId;
+    int status;
+
+    childId = fork();
+
+    if (childId < 0) {
+        while(childId < 0) {
+            childId = fork();
+        }
+            
+        exit(EXIT_FAILURE);
+    }
+    
+    if (childId == 0) {
+        // child
+        
+        execv(commandPath, argv);
+        exit(0);
+
+    } else {
+        //parent
+        
+        while ((wait(&status)) > 0);
+    }
+}
+
+```
+* [ mengatur jalannya waktu kode pada waktu tertentu ]
+```c
+time_t t = time(NULL);
+        struct tm timeInfo = *localtime(&t);
+        int i;
+        
+        if(timeInfo.tm_mday == 9 && timeInfo.tm_mon + 1 == 4 && timeInfo.tm_hour == 16 && timeInfo.tm_min == 22 && timeInfo.tm_sec == 00) {
+            
+            //pekerjaan yang dilakukan pada 9 April jam 16:22:00
+                  
+            
+        } else if(timeInfo.tm_mday == 9 && timeInfo.tm_mon + 1 == 4 && timeInfo.tm_hour == 22 && timeInfo.tm_min == 22 && timeInfo.tm_sec == 00) {
+            
+	    //pekerjaan yang dilakukan pada 9 April jam 22:22:00
+        }
+```
+
+kode lengkap implementasi pengerjaan [soal1.c](https://github.com/gsihaj5/soal-shift-sisop-modul-2-D03-2021/blob/main/soal1/soal1.c)
 
 ## Kendala 🕳
-1. Belum bisa mengimplementasikan pada daemon agar berjalan di latar belakang
-2. Belum bisa mengatur program agar berjalan pada waktu yang diminta pada deskripsi soal
+Sebelum revisi program belum bisa diimplementasikan di latar belakang dan belum bisa berjalan pada waktu yang ditentukan
+![nomer1 jam 14:00](https://github.com/widigdacahya/gif/blob/main/nomer1_.gif?raw=true)
 
-## Hasil Pengerjaan 🖥
+## Hasil Pengerjaan(setelah revisi) 🖥
 ![nomer1 jam 14:00](https://github.com/widigdacahya/gif/blob/main/nomer1_.gif?raw=true)
 
 # ============== NO 2 ===============
