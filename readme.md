@@ -626,6 +626,7 @@ yang di tulis menggunakan fopen.
 1. untuk flag x -> menggunakan perintah kill -9 untuk kill parent saja dan membiarkan child process berjalan hingga selesai
 
 ##PROGRAM FLOW
+
 Cycle pertama untuk infinite loop dan pembuatan killer program
 setiap 40 detik infinite loop nya akan fork dan membuat child process baru
 
@@ -633,3 +634,6 @@ setiap 40 detik infinite loop nya akan fork dan membuat child process baru
 
 Cycle ke 2 merupakan process child dari cycle pertama dan menghandle pembuatan directory, download gambar, remove, dan zip.
 ![cycle 2](/soal3/cycle2.png?raw=true)
+
+##KENDALA
+- butuh fork yang banyak, sebenarnya simple hanya fork saja, tetapi banyak sehingga menjadi lebih rumit
