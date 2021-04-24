@@ -629,7 +629,7 @@ yang di tulis menggunakan fopen.
 Cycle pertama untuk infinite loop dan pembuatan killer program
 setiap 40 detik infinite loop nya akan fork dan membuat child process baru
 
-![cycle 1](https://github.com/gsihaj5/soal-shift-sisop-modul-2-D03-2021/blob/master/soal3/cycle1.png)
+![cycle 1](https://github.com/gsihaj5/soal-shift-sisop-modul-2-D03-2021/blob/master/soal3/cycle1.png?raw=true)
 
 Cycle ke 2 merupakan process child dari cycle pertama dan menghandle pembuatan directory, download gambar, remove, dan zip.
-![cycle 2](https://github.com/gsihaj5/soal-shift-sisop-modul-2-D03-2021/blob/master/soal3/cycle2.png)
+![cycle 2](https://github.com/gsihaj5/soal-shift-sisop-modul-2-D03-2021/blob/master/soal3/cycle2.png?raw=true)
