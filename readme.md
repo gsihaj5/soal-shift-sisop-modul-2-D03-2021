@@ -429,7 +429,7 @@ Soal c dan d diselesaikan dengan menggunakan Directory Listing dan fork. Pertama
 
 ## PENYELESAIAN
 
-```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -625,4 +625,11 @@ yang di tulis menggunakan fopen.
 1. untuk flag z -> menggunakan perintah pkill -s dengan parameter session id untuk kill semua process nya
 1. untuk flag x -> menggunakan perintah kill -9 untuk kill parent saja dan membiarkan child process berjalan hingga selesai
 
+##PROGRAM FLOW
+Cycle pertama untuk infinite loop dan pembuatan killer program
+setiap 40 detik infinite loop nya akan fork dan membuat child process baru
 
+![cycle 1](https://github.com/gsihaj5/soal-shift-sisop-modul-2-D03-2021/blob/master/soal3/cycle1.png)
+
+Cycle ke 2 merupakan process child dari cycle pertama dan menghandle pembuatan directory, download gambar, remove, dan zip.
+![cycle 2](https://github.com/gsihaj5/soal-shift-sisop-modul-2-D03-2021/blob/master/soal3/cycle2.png)
